@@ -1,1 +1,1 @@
-include ':app', ':viewtest', ':smarttablayouttest', ':toolbartest', ':banner', ':circularprogress', ':tabhost'
+include ':app', ':viewtest', ':smarttablayouttest', ':toolbartest', ':banner', ':circularprogress', ':tabhost', ':recyclerviewdemo'

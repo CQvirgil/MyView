@@ -1,4 +1,4 @@
-package com.example.viewtest.mView;
+package com.example.viewtest.PassWordEditorText;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,9 +24,9 @@ public class PassWordEditorText extends EditText {
     private int text_lenth;
     private String rect_color = "#dddddd";
     private String point_color = "#000000";
-    private PasswordListener passwordListener = null;
+    private PassWordListener passwordListener = null;
 
-    public void setOnPasswordListener(PasswordListener passwordListener) {
+    public void setOnPasswordListener(PassWordListener passwordListener) {
         this.passwordListener = passwordListener;
     }
 
@@ -72,7 +72,6 @@ public class PassWordEditorText extends EditText {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         width = setDip(MeasureSpec.getSize(widthMeasureSpec));
         height = setDip(MeasureSpec.getSize(heightMeasureSpec));
-
     }
 
     @Override
@@ -127,6 +126,7 @@ public class PassWordEditorText extends EditText {
         this.setMaxEms(6);
         this.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         NullMenuEditText();
+        setMaxLines(6);
     }
 
     private int setDip(int dp) {
@@ -186,8 +186,4 @@ public class PassWordEditorText extends EditText {
     public boolean onTextContextMenuItem(int id) {
         return true;
     }
-}
-
-interface PasswordListener {
-    void onFinish(String text);
 }

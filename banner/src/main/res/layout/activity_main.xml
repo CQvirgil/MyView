@@ -8,10 +8,8 @@
 
     <com.example.banner.Banner
         android:id="@+id/banner"
-        android:layout_width="400dp"
-        android:layout_height="250dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

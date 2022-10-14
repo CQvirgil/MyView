@@ -1,10 +1,8 @@
 package com.example.virgil.demo.Util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
-import android.view.WindowManager;
 
 /*工具类*/
 public class Tools {

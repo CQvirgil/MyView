@@ -1,11 +1,8 @@
 package com.example.banner;
 
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,5 +26,26 @@ public class MainActivity extends AppCompatActivity {
         banner_item.add(R.drawable.test_img1);
         BannerAdapter adapter = new BannerAdapter(banner_item, this);
         banner.setAdapter(adapter);
+        banner.setCarousel(true);
+        banner.setNavPointColor(Color.parseColor("#1E90FF"));
+        banner.setTime(20000);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        banner.setCarousel(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        banner.setCarousel(false);
     }
 }

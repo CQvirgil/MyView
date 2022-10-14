@@ -33,11 +33,12 @@ public class BannerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView = new ImageView(context);
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        //imageView.setPadding(50,0,50,0);
         imageView.setLayoutParams(lp);
         container.addView(imageView);
-        imageView.setImageResource(item.get(position));
-        imageView.setBackgroundResource(R.drawable.border);
+        //imageView.setImageResource(item.get(position));
+        imageView.setBackgroundResource(item.get(position));
         return imageView;
     }
 

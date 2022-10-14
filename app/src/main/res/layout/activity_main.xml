@@ -6,12 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_recyclerview"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="5dp"
-        android:paddingBottom="5dp"
+    <com.example.virgil.demo.UI.BannerText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

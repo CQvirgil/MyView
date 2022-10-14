@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -15,10 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,27 +25,36 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     private Timer timer;
     private int item_count = 0;
     private int width, height;
+    private int nav_color;
+    private boolean isCarousel = true;
+    private int time;
 
 
     public Banner(Context context) {
         super(context);
         initViews();
         initHandler();
-        setTimer();
+        if(isCarousel){
+            setTimer();
+        }
     }
 
     public Banner(Context context, AttributeSet attrs) {
         super(context, attrs);
         initViews();
         initHandler();
-        setTimer();
+        if(isCarousel){
+            setTimer();
+        }
     }
 
     public Banner(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initViews();
         initHandler();
-        setTimer();
+        if(isCarousel){
+            setTimer();
+        }
     }
 
     @SuppressLint("NewApi")
@@ -61,7 +65,7 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         setTimer();
     }
 
-    public void setAdapter(PagerAdapter adapter){
+    public void setAdapter(PagerAdapter adapter) {
         viewPager.setAdapter(adapter);
         item_count = adapter.getCount();
     }
@@ -76,6 +80,8 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         addView(viewPager);
         viewPager.setOnTouchListener(this);
         viewPager.setCurrentItem(1);
+        nav_color = Color.WHITE;
+        time = 5000;
     }
 
     @Override
@@ -87,28 +93,22 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
+        paint.setColor(Color.GRAY);
         paint.setDither(true);
         paint.setAntiAlias(true);
-        canvas.drawCircle(width/2 - dip2px(27.5f),height - dip2px(20),dip2px(2.5f),paint);
-        canvas.drawCircle(width/2  - dip2px(12.5f),height - dip2px(20),dip2px(2.5f),paint);
-        canvas.drawCircle(width/2  + dip2px(2.5f),height - dip2px(20),dip2px(2.5f),paint);
-        canvas.drawCircle(width/2  + dip2px(17.5f),height - dip2px(20),dip2px(2.5f),paint);
-        paint.setColor(Color.WHITE);
-        switch (c_viewpager_postion){
-            case 1:
-                canvas.drawCircle(width/2 - dip2px(27.5f),height - dip2px(20),dip2px(2.5f),paint);
-                break;
-            case 2:
-                canvas.drawCircle(width/2  - dip2px(12.5f),height - dip2px(20),dip2px(2.5f),paint);
-                break;
-            case 3:
-                canvas.drawCircle(width/2  + dip2px(2.5f),height - dip2px(20),dip2px(2.5f),paint);
-                break;
-            case 4:
-                canvas.drawCircle(width/2  + dip2px(17.5f),height - dip2px(20),dip2px(2.5f),paint);
-                break;
+        float start_postion = 27.5f;
+        for (int i = 0; i < 4; i++) {
+            start_postion = 27.5f - 15 * i;
+            canvas.drawCircle(width / 2 - dip2px(start_postion), height - dip2px(20), dip2px(2.5f), paint);
         }
+
+//        canvas.drawCircle(width/2  - dip2px(12.5f),height - dip2px(20),dip2px(2.5f),paint);
+//        canvas.drawCircle(width/2  + dip2px(2.5f),height - dip2px(20),dip2px(2.5f),paint);
+//        canvas.drawCircle(width/2  + dip2px(17.5f),height - dip2px(20),dip2px(2.5f),paint);
+        paint.setColor(nav_color);
+        float cr_position = 27.5f;
+        cr_position = 27.5f - 15 * (c_viewpager_postion - 1);
+        canvas.drawCircle(width / 2 - dip2px(cr_position), height - dip2px(20), dip2px(2.5f), paint);
     }
 
     @SuppressLint("HandlerLeak")
@@ -132,6 +132,13 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         };
     }
 
+    public void setTime(int time){
+        this.time = time;
+        timer.cancel();
+        timer = null;
+        setTimer();
+    }
+
     private void setTimer() {
         if (timer == null) {
             timer = new Timer();
@@ -140,8 +147,26 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
                 public void run() {
                     handler.sendEmptyMessage(1001);
                 }
-            }, 1000, 3000);
+            }, 1000, time);
         }
+    }
+
+    public boolean IsCarousel(){
+        return isCarousel;
+    }
+
+    public void setCarousel(boolean isCarousel){
+        this.isCarousel = isCarousel;
+        if(isCarousel){
+            setTimer();
+        }else{
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    public void setNavPointColor(int color){
+       nav_color =  color;
     }
 
     @Override
@@ -155,6 +180,7 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
     }
+
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -188,12 +214,16 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                timer.cancel();
-                timer = null;
+                if(timer != null){
+                    timer.cancel();
+                    timer = null;
+                }
                 //Log.i(TAG, "onTouch: ");
                 break;
             case MotionEvent.ACTION_UP:
-                setTimer();
+                if(isCarousel){
+                    setTimer();
+                }
                 break;
         }
         return false;

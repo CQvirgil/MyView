@@ -16,19 +16,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
-        setRecyclerView();
-        Log.i("testlog",Tools.get().getWindowWidth(this)+"");
-        Log.i("testlog",Tools.get().dp2px(20,this)+"");
+
     }
 
-    private void initView(){
-        recyclerView = findViewById(R.id.main_recyclerview);
-    }
-
-    private void setRecyclerView(){
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(new Adapter(this));
-    }
+//    private void initView(){
+//        recyclerView = findViewById(R.id.main_recyclerview);
+//    }
+//
+//    private void setRecyclerView(){
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+//        recyclerView.setLayoutManager(gridLayoutManager);
+//        recyclerView.setAdapter(new Adapter(this));
+//    }
 }
